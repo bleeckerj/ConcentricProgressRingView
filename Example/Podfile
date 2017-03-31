@@ -1,7 +1,8 @@
 use_frameworks!
 
 target 'ConcentricProgressRingView_Example' do
-  pod 'ConcentricProgressRingView', :path => '../'
+    pod 'JBConcentricProgressRingView', :git => 'https://github.com/bleeckerj/JBConcentricProgressRingView.git'
+    #pod 'ConcentricProgressRingView', :path => '../'
   #pod 'LionheartExtensions'
 
 #  target 'ConcentricProgressRingView_Tests' do

@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  ConcentricProgressRingView: d1e1fe1a01b50ad536f9acbbf2f52134a6e9ee17
+  ConcentricProgressRingView: 0b2954fd9bb824d73018ad6eef5c46e226c4a862
 
 PODFILE CHECKSUM: 88689029b19b71a6cd46cc066adf838e94d78466
 
