@@ -7,7 +7,7 @@
 
 import UIKit
 
-public struct ProgressRing {
+public struct JBProgressRing {
     public var width: CGFloat?
     public var color: UIColor?
     public var backgroundColor: UIColor?
@@ -25,7 +25,7 @@ public struct ProgressRing {
     }
 }
 
-open class ProgressRingLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
+open class JBProgressRingLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
     var completion: ((Void) -> Void)?
 
     open var progress: CGFloat? {
@@ -38,11 +38,8 @@ open class ProgressRingLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate
         }
     }
     
-    public init(center: CGPoint, radius: CGFloat, width: CGFloat, startAngle: CGFloat, endAngle: CGFloat, color: UIColor) {
-        super.init()
-        
-        //        let bezier = UIBezierPath(arcCenter: center, radius: radius, startAngle: CGFloat.pi/2, endAngle: CGFloat.pi*2 - CGFloat.pi/2, clockwise: true)
-        //
+    public init(center: CGPoint, radius: CGFloat, width: CGFloat, startAngle: CGFloat, endAngle: CGFloat, color: UIColor, cap: String ) {
+            super.init()
         let bezier = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
         
         delegate = self as CALayerDelegate
@@ -50,7 +47,23 @@ open class ProgressRingLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate
         fillColor = UIColor.clear.cgColor
         strokeColor = color.cgColor
         lineWidth = width
-        lineCap = kCALineCapRound
+        lineCap = cap
+        strokeStart = 0
+        strokeEnd = 0
+
+    }
+    
+    public init(center: CGPoint, radius: CGFloat, width: CGFloat, startAngle: CGFloat, endAngle: CGFloat, color: UIColor) {
+        super.init()
+        
+        let bezier = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        
+        delegate = self as CALayerDelegate
+        path = bezier.cgPath
+        fillColor = UIColor.clear.cgColor
+        strokeColor = color.cgColor
+        lineWidth = width
+        lineCap = kCALineCapButt//kCALineCapRound
         strokeStart = 0
         strokeEnd = 0
     }
@@ -86,7 +99,7 @@ open class ProgressRingLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate
     }
 }
 
-public final class CircleLayer: ProgressRingLayer {
+public final class CircleLayer: JBProgressRingLayer {
     init(center: CGPoint, radius: CGFloat, width: CGFloat, color: UIColor) {
         super.init(center: center, radius: radius, width: width, startAngle: 0, endAngle: 2*CGFloat.pi, color: color)
         progress = 1
@@ -101,17 +114,17 @@ enum ConcentricProgressRingViewError: Error {
     case invalidParameters
 }
 
-public final class ConcentricProgressRingView: UIView, Sequence {
-    public var arcs: [ProgressRingLayer] = []
+public final class JBConcentricProgressRingView: UIView, Sequence {
+    public var arcs: [JBProgressRingLayer] = []
     var circles: [CircleLayer] = []
 
     @available(*, unavailable, message: "Progress rings without a color, width, or progress set (such as those provided) can't be used with this initializer. Please use the other initializer that accepts default values.")
-    public init?(center: CGPoint, radius: CGFloat, margin: CGFloat, rings: [ProgressRing?]) {
+    public init?(center: CGPoint, radius: CGFloat, margin: CGFloat, rings: [JBProgressRing?]) {
         return nil
     }
 
-    public convenience init(center: CGPoint, radius: CGFloat, margin: CGFloat, rings theRings: [ProgressRing?], defaultColor: UIColor? = UIColor.white, defaultBackgroundColor: UIColor = UIColor.clear, defaultWidth: CGFloat?) throws {
-        var rings: [ProgressRing] = []
+    public convenience init(center: CGPoint, radius: CGFloat, margin: CGFloat, rings theRings: [JBProgressRing?], defaultColor: UIColor? = UIColor.white, defaultBackgroundColor: UIColor = UIColor.clear, defaultWidth: CGFloat?) throws {
+        var rings: [JBProgressRing] = []
 
         for ring in theRings {
             guard var ring = ring else {
@@ -134,7 +147,7 @@ public final class ConcentricProgressRingView: UIView, Sequence {
         self.init(center: center, radius: radius, margin: margin, rings: rings)
     }
 
-    public init(center: CGPoint, radius: CGFloat, margin: CGFloat, rings: [ProgressRing]) {
+    public init(center: CGPoint, radius: CGFloat, margin: CGFloat, rings: [JBProgressRing]) {
         let frame = CGRect(x: center.x - radius, y: center.y - radius, width: radius * 2, height: radius * 2)
         let theCenter = CGPoint(x: radius, y: radius)
 
@@ -155,7 +168,7 @@ public final class ConcentricProgressRingView: UIView, Sequence {
                 layer.addSublayer(circle)
             }
 
-            let arc = ProgressRingLayer(center: theCenter, radius: radius, width: width, color: color)
+            let arc = JBProgressRingLayer(center: theCenter, radius: radius, width: width, color: color)
             arcs.append(arc)
             layer.addSublayer(arc)
         }
@@ -165,11 +178,11 @@ public final class ConcentricProgressRingView: UIView, Sequence {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public subscript(index: Int) -> ProgressRingLayer {
+    public subscript(index: Int) -> JBProgressRingLayer {
         return arcs[index]
     }
 
-    public func makeIterator() -> IndexingIterator<[ProgressRingLayer]> {
+    public func makeIterator() -> IndexingIterator<[JBProgressRingLayer]> {
         return arcs.makeIterator()
     }
 }
