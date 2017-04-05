@@ -1,4 +1,7 @@
-# ConcentricProgressRingView
+
+
+# JBConcentricProgressRingView
+A variant built to support some needs that was different enough in some places that I didn't want to get confused with the original, so I changed the name and some other stuff.
 
 [![Version](https://img.shields.io/cocoapods/v/ConcentricProgressRingView.svg?style=flat)](http://cocoapods.org/pods/ConcentricProgressRingView)
 [![License](https://img.shields.io/cocoapods/l/ConcentricProgressRingView.svg?style=flat)](http://cocoapods.org/pods/ConcentricProgressRingView)
