@@ -1,0 +1,6 @@
+framework module JBConcentricProgressRingView {
+  umbrella header "JBConcentricProgressRingView-umbrella.h"
+
+  export *
+  module * { export * }
+}

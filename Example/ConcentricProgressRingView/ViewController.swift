@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import ConcentricProgressRingView
+import JBConcentricProgressRingView
 //import LionheartExtensions
 
 class ViewController: UIViewController {
-    var progressRingView: ConcentricProgressRingView!
+    var progressRingView: JBConcentricProgressRingView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +20,9 @@ class ViewController: UIViewController {
         let radius: CGFloat = self.view.frame.width/2 - 18
 
         let rings = [
-            ProgressRing(color: UIColor.red, backgroundColor: UIColor.init(red: 5/255, green: 33/255, blue: 0, alpha: 0))
+            JBProgressRing(color: UIColor.red, backgroundColor: UIColor.init(red: 5/255, green: 33/255, blue: 0, alpha: 0))
         ]
-        progressRingView = try! ConcentricProgressRingView(center: view.center, radius: radius, margin: margin, rings: rings, defaultColor: UIColor.clear, defaultWidth: 18)
+        progressRingView = try! JBConcentricProgressRingView(center: view.center, radius: radius, margin: margin, rings: rings, defaultColor: UIColor.clear, defaultWidth: 18)
 
         for ring in progressRingView {
             ring.progress = 0.0
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         view.backgroundColor = UIColor.black
         //view.addSubview(progressRingView)
         
-        let foo : ProgressRingLayer = ProgressRingLayer(center: self.view.center, radius: 200, width: 2, startAngle: 0, endAngle: 2*CGFloat.pi, color: UIColor.orange)
+        let foo : JBProgressRingLayer = JBProgressRingLayer(center: self.view.center, radius: 200, width: 2, startAngle: 0, endAngle: 2*CGFloat.pi, color: UIColor.orange)
         foo.setProgress(0.5, duration: 2)
         //let x : UIView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
         //x.backgroundColor = UIColor.gray
