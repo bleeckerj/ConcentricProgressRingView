@@ -26,7 +26,7 @@ public struct JBProgressRing {
 }
 
 open class JBProgressRingLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelegate {
-    var completion: ((Void) -> Void)?
+    var completion: (() -> Void)?
 
     open var progress: CGFloat? {
         get {
@@ -80,7 +80,7 @@ open class JBProgressRingLayer: CAShapeLayer, CALayerDelegate, CAAnimationDelega
         super.init(layer: layer)
     }
 
-    open func setProgress(_ progress: CGFloat, duration: CGFloat, completion: ((Void) -> Void)? = nil) {
+    open func setProgress(_ progress: CGFloat, duration: CGFloat, completion: (() -> Void)? = nil) {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = strokeEnd
         animation.toValue = progress
